@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'home',
+    'api',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,4 +132,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'home.MyUser'
+AUTH_USER_MODEL = 'api.MyUser'
