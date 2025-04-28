@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import api_view
 
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, ProfileEditForm
 
 
 def home(request):
@@ -36,3 +36,8 @@ def signin(request):
     else:
         form = LoginForm()
     return render(request, 'home/signin.html', {'form': form})
+
+
+def profile_view(request):
+    form = ProfileEditForm()
+    return render(request, 'home/profile.html', {'form': form})

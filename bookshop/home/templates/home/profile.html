@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Профиль {{ profile_user.login }}</h1>
+
+{% if form %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+{% endif %}
+
+<a href="/">На главную</a>
+{% endblock %}

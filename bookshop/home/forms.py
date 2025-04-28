@@ -13,3 +13,12 @@ class SignUpForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     password = forms.CharField(label="Пароль", widget=forms.PasswordInput)
+
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = MyUser
+        fields = ('login', 'email', 'password', 'birth_date')
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type': 'date'}),
+        }
