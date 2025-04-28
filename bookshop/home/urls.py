@@ -5,5 +5,5 @@ urlpatterns = [
     path('', views.home),
     path('signup', views.signup),
     path('signin', views.signin),
-    path('profile', views.profile_view)
+    path('profile/<int:user_id>/', views.profile_view, name='profile'),
 ]

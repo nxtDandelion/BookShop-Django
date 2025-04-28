@@ -1,6 +1,8 @@
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from .models import MyUser
 
 from rest_framework.decorators import api_view
 
@@ -38,6 +40,21 @@ def signin(request):
     return render(request, 'home/signin.html', {'form': form})
 
 
-def profile_view(request):
-    form = ProfileEditForm()
-    return render(request, 'home/profile.html', {'form': form})
+@login_required
+def profile_view(request, user_id):
+    user_profile = get_object_or_404(MyUser, id=user_id)
+    if request.user != user_profile:
+        return redirect('/')
+    if request.method == 'POST':
+        if 'action' in request.POST:
+            if request.POST['action'] == 'logout':
+                logout(request)
+                return redirect('/')
+        form = ProfileEditForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', user_id)
+    else:
+        form = ProfileEditForm(instance=user_profile)
+    return render(request, 'home/profile.html',
+                  {'user_profile': user_profile, 'form': form})
